@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roblox Claim Advocate — Free, Confidential Case Review</title>
+<meta name="description" content="If a child was targeted, groomed, or exploited by someone they met on Roblox, a free and confidential case review can tell you whether a claim may be available. Attorney advertising.">
+<meta name="robots" content="index,follow">
+<style>
+:root{
+  --navy:#16263f; --navy2:#1e3355; --navy-soft:#eef2f7;
+  --teal:#127b7f; --teal2:#159aa0; --teal-soft:#e6f4f4;
+  --ink:#1d2733; --muted:#5c6b7d; --line:#e2e8ef;
+  --bg:#f6f8fb; --card:#ffffff;
+  --warn:#8a5a12; --warn-soft:#fdf5e6;
+  --shadow:0 18px 50px rgba(22,38,63,.11);
+  --shadow-sm:0 6px 20px rgba(22,38,63,.07);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* Header */
+.hdr{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line)}
+.hdr-in{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;color:var(--navy);letter-spacing:-.3px}
+.brand .mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;display:grid;place-items:center;font-size:14px;font-weight:800;letter-spacing:.5px;box-shadow:var(--shadow-sm)}
+.brand b{color:var(--teal);font-weight:800}
+.hdr-phone{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--navy);font-size:15px;white-space:nowrap}
+.hdr-phone svg{width:18px;height:18px;fill:var(--teal)}
+.hdr-phone small{display:block;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.3px}
+
+/* Progress */
+.progress-wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.progress{height:6px;background:var(--navy-soft);border-radius:99px;margin:16px 0 4px;overflow:hidden}
+.progress > i{display:block;height:100%;width:8%;background:linear-gradient(90deg,var(--teal),var(--teal2));border-radius:99px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+.progress-lbl{font-size:12px;color:var(--muted);font-weight:600;text-align:right;letter-spacing:.2px}
+
+/* Shell */
+.wrap{max-width:660px;margin:0 auto;padding:20px 20px 40px}
+.intro{text-align:center;margin:14px 0 20px}
+.intro h1{font-size:27px;line-height:1.28;color:var(--navy);margin:0 0 10px;font-weight:800;letter-spacing:-.4px}
+.intro p{margin:0;color:var(--muted);font-size:16px}
+.badge-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:16px}
+.tbadge{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:12.5px;font-weight:700;color:var(--navy);box-shadow:var(--shadow-sm)}
+.tbadge svg{width:14px;height:14px;fill:var(--teal)}
+
+/* Card */
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:30px 28px}
+.step{display:none;animation:fade .3s ease}
+.step.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.q{font-size:21px;font-weight:800;color:var(--navy);text-align:center;margin:0 0 8px;letter-spacing:-.3px;line-height:1.35}
+.q-sub{text-align:center;color:var(--muted);font-size:14px;margin:0 0 22px}
+
+/* Option buttons */
+.opts{display:grid;gap:11px;margin-top:4px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:14px;padding:15px 17px;font-size:15.5px;font-weight:700;color:var(--navy);cursor:pointer;transition:all .15s;font-family:inherit;line-height:1.4}
+.opt:hover{border-color:var(--teal2);background:var(--teal-soft)}
+.opt.sel{border-color:var(--teal);background:var(--teal-soft)}
+.opt .tick{width:22px;height:22px;flex:0 0 22px;border:2px solid var(--line);border-radius:6px;display:grid;place-items:center;background:#fff;transition:all .15s}
+.opt .tick svg{width:14px;height:14px;fill:#fff;opacity:0}
+.opt.sel .tick{background:var(--teal);border-color:var(--teal)}
+.opt.sel .tick svg{opacity:1}
+.opt small{display:block;font-weight:600;color:var(--muted);font-size:12.5px;margin-top:2px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;border:none;border-radius:99px;padding:16px 26px;font-size:16.5px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .18s;letter-spacing:.2px}
+.btn-primary{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;box-shadow:0 12px 26px rgba(22,38,63,.26)}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-primary:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-primary svg{width:18px;height:18px;fill:#fff}
+.btn-teal{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff;box-shadow:0 12px 26px rgba(18,123,127,.28)}
+.btn-teal:hover{transform:translateY(-2px)}
+.nav-row{display:flex;align-items:center;gap:12px;margin-top:20px}
+.btn-back{background:none;border:none;color:var(--muted);font-weight:700;font-size:14px;cursor:pointer;padding:8px 4px;font-family:inherit;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.btn-back svg{width:14px;height:14px;fill:var(--muted)}
+.btn-back:hover{color:var(--navy)}
+
+/* Form */
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;border:2px solid var(--line);border-radius:12px;padding:13px 15px;font-size:15px;font-family:inherit;color:var(--ink);background:#fff;transition:border-color .15s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--teal)}
+.field .hint{font-size:12px;color:var(--muted);font-weight:600;margin-top:5px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* Reassurance note */
+.note{display:flex;gap:10px;align-items:flex-start;background:var(--teal-soft);border:1px solid #cfe6e6;border-radius:14px;padding:13px 15px;margin:0 0 20px;font-size:13.5px;color:#155e61;line-height:1.55}
+.note svg{width:18px;height:18px;fill:var(--teal);flex:0 0 18px;margin-top:2px}
+
+/* Consent */
+.consent{display:flex;gap:10px;align-items:flex-start;margin:16px 0 4px;font-size:11.5px;color:var(--muted);line-height:1.6}
+.consent input{margin-top:3px;width:17px;height:17px;flex:0 0 17px;accent-color:var(--teal)}
+.consent a{color:var(--teal);text-decoration:underline}
+
+/* Result / DQ */
+.result{text-align:center;padding:6px 0}
+.result .check{width:64px;height:64px;border-radius:50%;background:var(--teal-soft);display:grid;place-items:center;margin:0 auto 16px}
+.result .check svg{width:34px;height:34px;fill:var(--teal)}
+.result .check.grey{background:var(--navy-soft)}
+.result .check.grey svg{fill:var(--muted)}
+.result h2{font-size:23px;color:var(--navy);margin:0 0 8px;font-weight:800;line-height:1.35}
+.result p{color:var(--muted);font-size:15px;margin:0 0 14px}
+.nextbox{background:var(--navy-soft);border-radius:16px;padding:20px;margin:18px 0;text-align:left}
+.nextbox h3{margin:0 0 12px;font-size:15px;color:var(--navy)}
+.nextbox ol{margin:0;padding-left:20px;font-size:14px;color:var(--ink)}
+.nextbox li{margin-bottom:8px}
+.result p.fine{font-size:12.5px;color:var(--muted);margin:16px 0 0}
+
+/* Support resources */
+.support{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:18px 0 0;text-align:left;font-size:13px;color:var(--muted);line-height:1.65}
+.support b{color:var(--navy);display:block;margin-bottom:6px;font-size:13.5px}
+.support a{color:var(--teal);text-decoration:underline;font-weight:700}
+
+/* trust strip */
+.trust{max-width:660px;margin:20px auto 0;display:flex;justify-content:center;gap:20px;flex-wrap:wrap;color:var(--muted);font-size:12.5px;font-weight:600}
+.trust span{display:inline-flex;align-items:center;gap:6px}
+.trust svg{width:15px;height:15px;fill:var(--teal)}
+
+/* Footer */
+footer{background:#101d31;color:#9aabbd;margin-top:44px;padding:32px 20px}
+.foot-in{max-width:900px;margin:0 auto;font-size:12px;line-height:1.7}
+.foot-in .fbrand{color:#fff;font-weight:800;font-size:15px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.foot-in .fbrand .mark{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.1);display:grid;place-items:center;font-size:11px}
+.foot-in p{margin:0 0 12px}
+.foot-links{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0;border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1);padding:12px 0}
+.foot-links a{color:#c0d0de;font-weight:600}
+.foot-links a:hover{color:#fff}
+.disc{font-size:11px;color:#7a8ea3;line-height:1.65}
+.adlabel{display:inline-block;background:rgba(255,255,255,.08);color:#c0d0de;font-size:10.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:4px 10px;border-radius:6px;margin-bottom:12px}
+
+@media(max-width:560px){
+  .intro h1{font-size:22px}
+  .card{padding:22px 17px;border-radius:16px}
+  .q{font-size:18.5px}
+  .hdr-phone small{display:none}
+  .brand{font-size:16px}
+  .row2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a href="./" class="brand"><span class="mark">RCA</span>Roblox Claim <b>Advocate</b></a>
+    <a href="tel:+18488636987" class="hdr-phone">
+      <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.3 1l-2.2 2.2z"/></svg>
+      <span><small>Speak with someone</small>(848) 863-6987</span>
+    </a>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress"><i id="bar"></i></div>
+    <div class="progress-lbl" id="stepLbl">Step 1 of 13</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="intro">
+    <h1>Was your child harmed by someone they met on Roblox?</h1>
+    <p>Families are taking legal action. Find out in a few minutes whether your family may have a claim.</p>
+    <div class="badge-row">
+      <span class="tbadge"><svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V5l-9-4zm-1 15-4-4 1.4-1.4L11 13.2l4.6-4.6L17 10l-6 6z"/></svg>Private &amp; confidential</span>
+      <span class="tbadge"><svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V5l-9-4z"/></svg>No cost to you</span>
+      <span class="tbadge"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.4V6h-2v7.6l5 3 1-1.7-4-2.5z"/></svg>Takes about 3 minutes</span>
+    </div>
+  </div>
+
+  <div class="card">
+
+    <!-- ===== 1. RELATIONSHIP ===== -->
+    <section class="step active" data-id="relationship">
+      <h2 class="q">Who are you completing this for?</h2>
+      <p class="q-sub">We need to know we're speaking with someone who can legally act for the person affected.</p>
+      <div class="note">
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        <span>Everything you enter here is confidential. You can stop at any point, and nothing is submitted until the final step.</span>
+      </div>
+      <div class="opts" data-field="relationship">
+        <button class="opt" onclick="pick(this,'Parent or legal guardian')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>I am the parent or legal guardian of the person affected</span></button>
+        <button class="opt" onclick="pick(this,'Affected person, now 18+')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>I am the person it happened to, and I am now 18 or older</span></button>
+        <button class="opt" onclick="pick(this,'Court-appointed legal authority')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>I have court-appointed legal authority to act for them<small>Guardian, conservator, or estate representative</small></span></button>
+        <button class="opt" onclick="pick(this,'Other relative or friend')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>I am another relative or a friend</span></button>
+      </div>
+    </section>
+
+    <!-- ===== 2. STATE ===== -->
+    <section class="step" data-id="state">
+      <h2 class="q">Which state does the affected person live in?</h2>
+      <p class="q-sub">The rules for these claims vary from state to state.</p>
+      <div class="field">
+        <label for="stateSel">State of residence</label>
+        <select id="stateSel">
+          <option value="">Select a state…</option>
+        </select>
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-primary" id="stateNext" disabled onclick="answerState()">Continue <svg viewBox="0 0 24 24"><path d="M5 12h12l-5 5 1.4 1.4L21 12l-7.6-6.4L12 7l5 5H5z"/></svg></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== 3. MINOR AT THE TIME ===== -->
+    <section class="step" data-id="minor">
+      <h2 class="q">Was the person affected under 18 when this happened?</h2>
+      <p class="q-sub">These claims are for people who were minors at the time.</p>
+      <div class="opts" data-field="was_minor">
+        <button class="opt" onclick="pick(this,'Yes')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Yes, they were under 18</span></button>
+        <button class="opt" onclick="pick(this,'No')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>No, they were already 18 or older</span></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== 4. MET ON ROBLOX ===== -->
+    <section class="step" data-id="met">
+      <h2 class="q">Did they first meet this person on Roblox?</h2>
+      <p class="q-sub">Contact may have moved to another app later — we're asking where it started.</p>
+      <div class="opts" data-field="met_on_roblox">
+        <button class="opt" onclick="pick(this,'Yes')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Yes, they first met on Roblox</span></button>
+        <button class="opt" onclick="pick(this,'No')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>No, they met somewhere else</span></button>
+        <button class="opt" onclick="pick(this,'Not sure')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>I'm not sure</span></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== 5. WHAT HAPPENED (multi) ===== -->
+    <section class="step" data-id="what">
+      <h2 class="q">Which of these happened?</h2>
+      <p class="q-sub">Select every one that applies. We know this is difficult — brief answers are fine.</p>
+      <div class="opts multi" data-field="what_happened">
+        <button class="opt" onclick="toggle(this,'In-person meeting and sexual assault')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>They were persuaded to meet in person, and were sexually assaulted</span></button>
+        <button class="opt" onclick="toggle(this,'Minor sent sexual images')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>They were asked for sexual images, and images were sent</span></button>
+        <button class="opt" onclick="toggle(this,'Perpetrator sent sexual images')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>The other person sent sexual images to them</span></button>
+        <button class="opt" onclick="toggle(this,'Grooming, no images exchanged')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Sexual messages or grooming, but no images were exchanged</span></button>
+        <button class="opt" onclick="toggleNone(this,'None of these')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>None of these</span></button>
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-primary" id="whatNext" disabled onclick="answerWhat()">Continue <svg viewBox="0 0 24 24"><path d="M5 12h12l-5 5 1.4 1.4L21 12l-7.6-6.4L12 7l5 5H5z"/></svg></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== 6. COMMUNICATIONS ON ROBLOX ===== -->
+    <section class="step" data-id="comms">
+      <h2 class="q">Was there contact on Roblox itself that led to this?</h2>
+      <p class="q-sub">For example sexual messages or images, or an offer of money, gift cards, or Robux.</p>
+      <div class="opts" data-field="roblox_comms">
+        <button class="opt" onclick="pick(this,'Yes')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Yes</span></button>
+        <button class="opt" onclick="pick(this,'No')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>No</span></button>
+        <button class="opt" onclick="pick(this,'Not sure')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>I'm not sure</span></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== 7. DIAGNOSIS (grooming-only branch) ===== -->
+    <section class="step" data-id="diag">
+      <h2 class="q">Has the affected person experienced any of the following?</h2>
+      <p class="q-sub">Select every one that applies.</p>
+      <div class="opts multi" data-field="diagnosis">
+        <button class="opt" onclick="toggle(this,'PTSD, anxiety or depression')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Diagnosed with PTSD, anxiety, or depression</span></button>
+        <button class="opt" onclick="toggle(this,'Emotional trauma')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Emotional trauma</span></button>
+        <button class="opt" onclick="toggle(this,'Suicidal ideation or self-harm')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Suicidal thoughts or self-harm</span></button>
+        <button class="opt" onclick="toggle(this,'Physical assault')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Physical assault</span></button>
+        <button class="opt" onclick="toggle(this,'Family harm')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Harm to the family</span></button>
+        <button class="opt" onclick="toggle(this,'Undergoing trauma therapy')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Currently in trauma therapy or counselling</span></button>
+        <button class="opt" onclick="toggleNone(this,'None of these')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>None of these</span></button>
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-primary" id="diagNext" disabled onclick="answerDiag()">Continue <svg viewBox="0 0 24 24"><path d="M5 12h12l-5 5 1.4 1.4L21 12l-7.6-6.4L12 7l5 5H5z"/></svg></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== 8. DOCTOR NAME (grooming-only branch) ===== -->
+    <section class="step" data-id="doctor">
+      <h2 class="q">Do you know the name of the doctor or therapist?</h2>
+      <p class="q-sub">The one who made the diagnosis or is providing the treatment.</p>
+      <div class="opts" data-field="knows_doctor">
+        <button class="opt" onclick="pickDoctor(this,'Yes')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Yes, I know their name</span></button>
+        <button class="opt" onclick="pickDoctor(this,'No')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>No, I don't</span></button>
+      </div>
+      <div id="docWrap" style="display:none;margin-top:16px">
+        <div class="field">
+          <label for="docName">Doctor or therapist name</label>
+          <input type="text" id="docName" placeholder="Dr. Jane Smith">
+          <div class="hint">A practice or clinic name is fine if you don't have the individual name.</div>
+        </div>
+        <div class="nav-row">
+          <button class="btn btn-primary" id="docNext" disabled onclick="answerDoctor()">Continue <svg viewBox="0 0 24 24"><path d="M5 12h12l-5 5 1.4 1.4L21 12l-7.6-6.4L12 7l5 5H5z"/></svg></button>
+        </div>
+      </div>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== 9. WHOSE ACCOUNT ===== -->
+    <section class="step" data-id="account_owner">
+      <h2 class="q">Whose Roblox account was this on?</h2>
+      <p class="q-sub">The account where the contact took place.</p>
+      <div class="opts" data-field="account_owner">
+        <button class="opt" onclick="pick(this,'Own account')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Their own Roblox account</span></button>
+        <button class="opt" onclick="pick(this,'Another minor account')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Another child's account<small>A sibling's, cousin's, or friend's account</small></span></button>
+        <button class="opt" onclick="pick(this,'An adult account')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>An adult's account</span></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== 10. USERNAME ===== -->
+    <section class="step" data-id="username">
+      <h2 class="q">Do you know the Roblox username on that account?</h2>
+      <p class="q-sub">Also called the gamertag or display name. The attorneys need this to look up the account.</p>
+      <div class="opts" data-field="knows_username">
+        <button class="opt" onclick="pickUser(this,'Yes')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Yes, I know the username</span></button>
+        <button class="opt" onclick="pickUser(this,'No')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>No, I don't know it</span></button>
+      </div>
+      <div id="userWrap" style="display:none;margin-top:16px">
+        <div class="field">
+          <label for="rbxUser">Roblox username / gamertag</label>
+          <input type="text" id="rbxUser" placeholder="e.g. BlueFox2213">
+        </div>
+        <div class="nav-row">
+          <button class="btn btn-primary" id="userNext" disabled onclick="answerUser()">Continue <svg viewBox="0 0 24 24"><path d="M5 12h12l-5 5 1.4 1.4L21 12l-7.6-6.4L12 7l5 5H5z"/></svg></button>
+        </div>
+      </div>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== 11. ACCOUNT ACCESS ===== -->
+    <section class="step" data-id="access">
+      <h2 class="q">Is that account still accessible?</h2>
+      <p class="q-sub">Or has anything from it been saved — screenshots, messages, or records?</p>
+      <div class="opts" data-field="account_access">
+        <button class="opt" onclick="pick(this,'Still accessible')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Yes, we can still log into it</span></button>
+        <button class="opt" onclick="pick(this,'Preserved')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Not accessible, but we saved screenshots or records</span></button>
+        <button class="opt" onclick="pick(this,'Gone')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>No, it's gone and nothing was saved</span></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== 12. EVIDENCE (multi) ===== -->
+    <section class="step" data-id="evidence">
+      <h2 class="q">What records or evidence do you still have?</h2>
+      <p class="q-sub">Select everything that applies. You don't need to send anything now.</p>
+      <div class="opts multi" data-field="evidence">
+        <button class="opt" onclick="toggle(this,'Roblox chat logs')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Roblox chat logs or messages</span></button>
+        <button class="opt" onclick="toggle(this,'Screenshots')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Screenshots</span></button>
+        <button class="opt" onclick="toggle(this,'Device records')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>The device itself, or device records</span></button>
+        <button class="opt" onclick="toggle(this,'Discord/Snapchat/text logs')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Discord, Snapchat, or text message logs</span></button>
+        <button class="opt" onclick="toggle(this,'Images or videos')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>The images or videos involved</span></button>
+        <button class="opt" onclick="toggle(this,'Police/FBI/NCMEC/Roblox report')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>A report to police, the FBI, NCMEC, or Roblox</span></button>
+        <button class="opt" onclick="toggle(this,'Medical or therapy records')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Medical, counselling, or therapy records</span></button>
+        <button class="opt" onclick="toggle(this,'School disruption records')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>School records showing the impact</span></button>
+        <button class="opt" onclick="toggle(this,'Parent account of events')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>A parent's written or verbal account of what happened</span></button>
+        <button class="opt" onclick="toggleNone(this,'None of these')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Nothing at all</span></button>
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-primary" id="evNext" disabled onclick="answerEvidence()">Continue <svg viewBox="0 0 24 24"><path d="M5 12h12l-5 5 1.4 1.4L21 12l-7.6-6.4L12 7l5 5H5z"/></svg></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== 13. ATTORNEY ===== -->
+    <section class="step" data-id="attorney">
+      <h2 class="q">Is anyone already representing you on this matter?</h2>
+      <p class="q-sub">If you already have a lawyer for this claim, we shouldn't contact you.</p>
+      <div class="opts" data-field="has_attorney">
+        <button class="opt" onclick="pick(this,'No')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>No, we don't have an attorney for this</span></button>
+        <button class="opt" onclick="pick(this,'Yes')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Yes, an attorney is already representing us</span></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== 14. LIVING ===== -->
+    <section class="step" data-id="living">
+      <h2 class="q">Is the person affected still living?</h2>
+      <p class="q-sub">We're sorry to have to ask. It affects which claims can be brought.</p>
+      <div class="opts" data-field="is_living">
+        <button class="opt" onclick="pick(this,'Yes')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Yes</span></button>
+        <button class="opt" onclick="pick(this,'No')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>No</span></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== 15. DECEASED FOLLOW-UP ===== -->
+    <section class="step" data-id="passing">
+      <h2 class="q">We're very sorry for your loss.</h2>
+      <p class="q-sub">One more question, and then we'll move on.</p>
+      <div class="opts" data-field="passing_cause">
+        <button class="opt" onclick="pick(this,'Suicide')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>Their death was by suicide</span></button>
+        <button class="opt" onclick="pick(this,'Other cause')"><span class="tick"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span><span>It was another cause</span></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== 16. DATES ===== -->
+    <section class="step" data-id="dates">
+      <h2 class="q">When did this happen?</h2>
+      <p class="q-sub">An approximate year is fine. Deadlines to file vary by state, so this helps us move quickly.</p>
+      <div class="row2">
+        <div class="field">
+          <label for="incYear">Year it happened (or started)</label>
+          <select id="incYear"><option value="">Select…</option></select>
+        </div>
+        <div class="field">
+          <label for="birthYear">Affected person's year of birth</label>
+          <select id="birthYear"><option value="">Select…</option></select>
+        </div>
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-primary" id="datesNext" disabled onclick="answerDates()">Continue <svg viewBox="0 0 24 24"><path d="M5 12h12l-5 5 1.4 1.4L21 12l-7.6-6.4L12 7l5 5H5z"/></svg></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== 17. CONTACT ===== -->
+    <section class="step" data-id="contact">
+      <h2 class="q">Where can a case specialist reach you?</h2>
+      <p class="q-sub">Based on your answers, this may qualify for review. There is no cost and no obligation.</p>
+      <div class="note">
+        <svg viewBox="0 0 24 24"><path d="M18 8h-1V6A5 5 0 0 0 7 6v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zM9 6a3 3 0 0 1 6 0v2H9V6zm3 11a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+        <span>Your details are kept confidential and are only shared with the attorneys reviewing this type of claim.</span>
+      </div>
+      <form id="leadForm" onsubmit="return submitLead(event)">
+        <div class="row2">
+          <div class="field"><label for="fn">Your first name</label><input type="text" id="fn" name="first_name" required></div>
+          <div class="field"><label for="ln">Your last name</label><input type="text" id="ln" name="last_name" required></div>
+        </div>
+        <div class="field"><label for="ph">Phone number</label><input type="tel" id="ph" name="phone" required placeholder="(555) 555-5555"></div>
+        <div class="field"><label for="em">Email address</label><input type="email" id="em" name="email" required placeholder="you@example.com"></div>
+        <div class="field">
+          <label for="bt">Best time to reach you</label>
+          <select id="bt" name="best_time">
+            <option>Any time</option><option>Morning</option><option>Afternoon</option><option>Evening</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="notes">Anything you'd like the attorneys to know (optional)</label>
+          <textarea id="notes" name="notes" rows="3" placeholder="Only what you're comfortable sharing."></textarea>
+        </div>
+
+        <label class="consent">
+          <input type="checkbox" id="consentBox" name="tcpa_consent" required>
+          <span id="consentText"></span>
+        </label>
+
+        <div class="nav-row">
+          <button class="btn btn-teal" id="submitBtn" type="submit">Request my free case review</button>
+        </div>
+      </form>
+      <div class="nav-row"><button class="btn-back" onclick="prev()"><svg viewBox="0 0 24 24"><path d="M19 12H7l5-5-1.4-1.4L3 12l7.6 6.4L12 17l-5-5h12z"/></svg>Back</button></div>
+    </section>
+
+    <!-- ===== DONE ===== -->
+    <section class="step" data-id="done">
+      <div class="result">
+        <div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></div>
+        <h2>Thank you, <span id="fnameOut">friend</span>. We've received your information.</h2>
+        <p>A case specialist will review what you've told us and contact you using the details you provided.</p>
+        <div class="nextbox">
+          <h3>What happens next</h3>
+          <ol>
+            <li>A specialist reviews your answers, usually within one business day.</li>
+            <li>They call or email you to go through the details and answer your questions.</li>
+            <li>If it looks like a claim may be available, they connect you with an attorney who handles these cases. You are never obliged to proceed.</li>
+          </ol>
+        </div>
+        <p class="fine">In the meantime, keep hold of anything related — messages, screenshots, the device, and any reports or medical records. Please don't delete the Roblox account.</p>
+        <div class="support" id="supportDone"></div>
+      </div>
+    </section>
+
+    <!-- ===== DOES NOT QUALIFY ===== -->
+    <section class="step" data-id="nq">
+      <div class="result">
+        <div class="check grey"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div>
+        <h2>Based on your answers, this claim isn't one we can help with</h2>
+        <p id="nqReason">The attorneys handling these cases have specific requirements, and it looks like this one falls outside them.</p>
+        <p class="fine">This isn't a judgement about what happened or a legal opinion on your situation. Other attorneys may take a different view, and you're welcome to seek your own advice.</p>
+        <div class="support" id="supportNq"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="trust">
+    <span><svg viewBox="0 0 24 24"><path d="M18 8h-1V6A5 5 0 0 0 7 6v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zM9 6a3 3 0 0 1 6 0v2H9V6z"/></svg>Secure &amp; encrypted</span>
+    <span><svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V5l-9-4z"/></svg>Confidential review</span>
+    <span><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1 15-5-5 1.4-1.4L11 13.2l6.6-6.6L19 8l-8 9z"/></svg>No fee unless a case is won</span>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-in">
+    <span class="adlabel">Attorney Advertising</span>
+    <div class="fbrand"><span class="mark">RCA</span>Roblox Claim Advocate</div>
+    <p>Legal Advocate Group · 4400 RT 9 South, Suite 1000, Freehold, NJ 07728 · (848) 863-6987</p>
+    <div class="foot-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms &amp; Conditions</a>
+      <a href="disclaimer.html">Legal Disclaimer</a>
+      <a href="privacy.html#dns">Do Not Sell or Share My Personal Information</a>
+    </div>
+    <p class="disc">
+      This website is a paid attorney advertisement. Roblox Claim Advocate is a marketing and case-intake service operated by Legal Advocate Group. We are not a law firm, we do not provide legal advice, and we do not evaluate the legal merits of your situation. Submitting this form does not create an attorney-client relationship; that relationship is formed only when you sign a written agreement with a law firm. Information you submit is shared with one or more independent law firms or their agents who handle claims of this type, and we may be compensated for that referral. No representation is made that the quality of legal services to be performed is greater than the quality of legal services performed by other lawyers. Prior results do not guarantee a similar outcome, and no outcome, recovery, or amount is promised or predicted. Cases may be referred to or handled by co-counsel. Deadlines to bring a claim vary by state and can be short.
+    </p>
+    <p class="disc">
+      Roblox Claim Advocate is not affiliated with, endorsed by, sponsored by, or connected to Roblox Corporation in any way. "Roblox" is a trademark of Roblox Corporation and is used here only to identify the platform on which the conduct described is alleged to have occurred.
+    </p>
+    <p class="disc">© 2026 Legal Advocate Group. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   Lead delivery endpoint — paste the Google Apps Script /exec
+   URL (or the law firm's intake endpoint) between the quotes.
+   While it is empty the funnel runs in PREVIEW MODE: everything
+   works, but nothing is transmitted.
+   ============================================================ */
+var ENDPOINT = '';
+
+/* Name of the buying law firm, used in the TCPA consent text.
+   Set this the moment the firm is confirmed. */
+var FIRM_NAME = '';   // e.g. 'Smith & Partners LLP'
+
+/* States the campaign does NOT accept. */
+var EXCLUDED_STATES = ['LA','CO','CA','FL'];
+
+/* ---- Personal-injury statute of limitations, in years, by state.
+   These are STARTING VALUES and must be confirmed with the firm before
+   they are relied on. Nothing is rejected on SOL alone — a lead outside
+   the window is still submitted, flagged sol_status="REVIEW", so a human
+   makes that call. Flip HARD_STOP_ON_SOL to true to screen them out. */
+var HARD_STOP_ON_SOL = false;
+var SOL_YEARS = {
+  AL:2,AK:2,AZ:2,AR:3,CA:2,CO:2,CT:2,DE:2,DC:3,FL:2,GA:2,HI:2,ID:2,IL:2,IN:2,
+  IA:2,KS:2,KY:1,LA:1,ME:6,MD:3,MA:3,MI:3,MN:2,MS:3,MO:5,MT:3,NE:4,NV:2,NH:3,
+  NJ:2,NM:3,NY:3,NC:3,ND:6,OH:2,OK:2,OR:2,PA:2,RI:3,SC:3,SD:3,TN:1,TX:2,UT:4,
+  VT:3,VA:2,WA:3,WV:2,WI:3,WY:4
+};
+
+var STATES = [['AL','Alabama'],['AK','Alaska'],['AZ','Arizona'],['AR','Arkansas'],['CA','California'],
+['CO','Colorado'],['CT','Connecticut'],['DE','Delaware'],['DC','District of Columbia'],['FL','Florida'],
+['GA','Georgia'],['HI','Hawaii'],['ID','Idaho'],['IL','Illinois'],['IN','Indiana'],['IA','Iowa'],
+['KS','Kansas'],['KY','Kentucky'],['LA','Louisiana'],['ME','Maine'],['MD','Maryland'],['MA','Massachusetts'],
+['MI','Michigan'],['MN','Minnesota'],['MS','Mississippi'],['MO','Missouri'],['MT','Montana'],['NE','Nebraska'],
+['NV','Nevada'],['NH','New Hampshire'],['NJ','New Jersey'],['NM','New Mexico'],['NY','New York'],
+['NC','North Carolina'],['ND','North Dakota'],['OH','Ohio'],['OK','Oklahoma'],['OR','Oregon'],
+['PA','Pennsylvania'],['RI','Rhode Island'],['SC','South Carolina'],['SD','South Dakota'],['TN','Tennessee'],
+['TX','Texas'],['UT','Utah'],['VT','Vermont'],['VA','Virginia'],['WA','Washington'],['WV','West Virginia'],
+['WI','Wisconsin'],['WY','Wyoming']];
+
+/* ---------- state of the questionnaire ---------- */
+var data = {};
+var stepHistory = [];
+var THIS_YEAR = new Date().getFullYear();
+
+/* Ordered flow. showIf decides whether a step is asked at all. */
+var FLOW = [
+  {id:'relationship'},
+  {id:'state'},
+  {id:'minor'},
+  {id:'met'},
+  {id:'what'},
+  {id:'comms'},
+  {id:'diag',    showIf:function(){ return groomingOnly(); }},
+  {id:'doctor',  showIf:function(){ return groomingOnly(); }},
+  {id:'account_owner'},
+  {id:'username'},
+  {id:'access'},
+  {id:'evidence'},
+  {id:'attorney'},
+  {id:'living'},
+  {id:'passing', showIf:function(){ return data.is_living === 'No'; }},
+  {id:'dates'},
+  {id:'contact'}
+];
+
+/* Grooming-only = the "no images exchanged" box is ticked and none of the
+   three image / in-person options are. That branch is the one the criteria
+   require a diagnosis for. */
+function groomingOnly(){
+  var w = data.what_happened || [];
+  var hard = ['In-person meeting and sexual assault','Minor sent sexual images','Perpetrator sent sexual images'];
+  var hasHard = hard.some(function(h){ return w.indexOf(h) > -1; });
+  return w.indexOf('Grooming, no images exchanged') > -1 && !hasHard;
+}
+function hasInPersonAssault(){
+  return (data.what_happened || []).indexOf('In-person meeting and sexual assault') > -1;
+}
+
+var cur = 'relationship';
+
+function visibleFlow(){
+  return FLOW.filter(function(s){ return !s.showIf || s.showIf(); });
+}
+function render(){
+  document.querySelectorAll('.step').forEach(function(s){ s.classList.remove('active'); });
+  var el = document.querySelector('.step[data-id="'+cur+'"]');
+  if(el) el.classList.add('active');
+
+  var vis = visibleFlow();
+  var idx = vis.findIndex(function(s){ return s.id === cur; });
+  var bar = document.getElementById('bar');
+  var lbl = document.getElementById('stepLbl');
+  if(idx > -1){
+    bar.style.width = ((idx+1) / vis.length * 100) + '%';
+    lbl.textContent = 'Step ' + (idx+1) + ' of ' + vis.length;
+  } else {
+    bar.style.width = '100%';
+    lbl.textContent = (cur === 'done') ? 'Complete' : '';
+  }
+  /* the marketing headline has no place above a thank-you or a screen-out */
+  document.querySelector('.intro').style.display =
+    (cur === 'done' || cur === 'nq') ? 'none' : '';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function goTo(id){ stepHistory.push(cur); cur = id; render(); }
+function next(){
+  var vis = visibleFlow();
+  var idx = vis.findIndex(function(s){ return s.id === cur; });
+  if(idx > -1 && idx < vis.length - 1){ goTo(vis[idx+1].id); }
+}
+function prev(){
+  if(stepHistory.length){ cur = stepHistory.pop(); render(); }
+}
+
+/* Screen-out. Records why, so the reason reaches the sheet too. */
+function disqualify(reason, msg){
+  data.disqualified = true;
+  data.dq_reason = reason;
+  document.getElementById('nqReason').textContent = msg ||
+    'The attorneys handling these cases have specific requirements, and it looks like this one falls outside them.';
+  stepHistory.push(cur); cur = 'nq'; render();
+}
+
+/* ---------- single-select ---------- */
+function pick(el, val){
+  var box = el.closest('.opts');
+  var field = box.getAttribute('data-field');
+  data[field] = val;
+  box.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel'); });
+  el.classList.add('sel');
+  setTimeout(function(){ route(field, val); }, 200);
+}
+
+/* ---------- multi-select ---------- */
+function toggle(el, val){
+  var box = el.closest('.opts');
+  var field = box.getAttribute('data-field');
+  data[field] = data[field] || [];
+  var none = box.querySelector('.opt.none');
+  if(none){ none.classList.remove('sel'); }
+  var i = data[field].indexOf(val);
+  if(i > -1){ data[field].splice(i,1); el.classList.remove('sel'); }
+  else { data[field].push(val); el.classList.add('sel'); }
+  data[field] = data[field].filter(function(v){ return v !== 'None of these'; });
+  refreshMultiBtn(field);
+}
+function toggleNone(el, val){
+  var box = el.closest('.opts');
+  var field = box.getAttribute('data-field');
+  box.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel'); });
+  el.classList.add('sel'); el.classList.add('none');
+  data[field] = [val];
+  refreshMultiBtn(field);
+}
+function refreshMultiBtn(field){
+  var map = {what_happened:'whatNext', diagnosis:'diagNext', evidence:'evNext'};
+  var btn = document.getElementById(map[field]);
+  if(btn){ btn.disabled = !(data[field] && data[field].length); }
+}
+
+/* ---------- routing / screen-out rules ---------- */
+function route(field, val){
+  if(field === 'relationship'){
+    if(val === 'Other relative or friend'){
+      return disqualify('No legal authority',
+        'To move a claim forward, we need to speak with a parent, a legal guardian, or the person it happened to if they are now an adult. If you can pass this on to them, they are very welcome to complete it themselves.');
+    }
+    return next();
+  }
+  if(field === 'was_minor'){
+    if(val === 'No') return disqualify('Not a minor at the time',
+      'These particular claims are limited to people who were under 18 at the time. That is a requirement set by the attorneys reviewing them.');
+    return next();
+  }
+  if(field === 'met_on_roblox'){
+    if(val === 'No') return disqualify('Did not meet on Roblox',
+      'These claims are limited to situations where the first contact happened on Roblox itself.');
+    if(val === 'Not sure') data.review_flags = (data.review_flags||[]).concat('Unsure where they first met');
+    return next();
+  }
+  if(field === 'roblox_comms'){
+    if(val === 'No') return disqualify('No qualifying Roblox contact',
+      'These claims require that some of the contact took place on Roblox itself.');
+    if(val === 'Not sure') data.review_flags = (data.review_flags||[]).concat('Unsure about Roblox contact');
+    return next();
+  }
+  if(field === 'account_owner'){
+    if(val === 'An adult account') return disqualify('Adult-owned account',
+      'These claims require that the account involved belonged to the child affected, or to another child.');
+    return next();
+  }
+  if(field === 'account_access'){
+    if(val === 'Gone') return disqualify('Account not accessible or preserved',
+      'The attorneys need to be able to see the account or something saved from it. Without that, they are not able to take the case forward. If you find you do still have screenshots or messages somewhere, please do come back.');
+    return next();
+  }
+  if(field === 'has_attorney'){
+    if(val === 'Yes') return disqualify('Already represented',
+      'Since you already have an attorney on this matter, it would not be appropriate for us to contact you about it. Your own attorney is the right person to speak with.');
+    return next();
+  }
+  if(field === 'is_living'){
+    return next();
+  }
+  if(field === 'passing_cause'){
+    if(val === 'Other cause') return disqualify('Deceased, cause unrelated',
+      'We are very sorry for your loss. The attorneys reviewing these particular claims are not able to take them forward in this situation.');
+    return next();
+  }
+  return next();
+}
+
+/* ---------- per-step continue handlers ---------- */
+function answerState(){
+  var sel = document.getElementById('stateSel');
+  var code = sel.value;
+  data.state = code;
+  data.state_name = sel.options[sel.selectedIndex].text;
+  if(EXCLUDED_STATES.indexOf(code) > -1){
+    return disqualify('Excluded state (' + code + ')',
+      'The attorneys handling these claims are not currently accepting cases from ' + data.state_name + '.');
+  }
+  next();
+}
+function answerWhat(){
+  var w = data.what_happened || [];
+  if(w.indexOf('None of these') > -1){
+    return disqualify('No qualifying harm',
+      'These claims are limited to specific kinds of harm, and from what you have told us this situation falls outside them.');
+  }
+  next();
+}
+function answerDiag(){
+  var d = data.diagnosis || [];
+  if(d.indexOf('None of these') > -1){
+    return disqualify('Grooming with no diagnosed harm',
+      'Where no images were exchanged, the attorneys need a diagnosed condition or ongoing treatment before they can take a claim forward.');
+  }
+  next();
+}
+function pickDoctor(el, val){
+  var box = el.closest('.opts');
+  box.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel'); });
+  el.classList.add('sel');
+  data.knows_doctor = val;
+  if(val === 'No'){
+    return setTimeout(function(){
+      disqualify('Diagnosing doctor unknown',
+        'For this type of claim the attorneys need the name of the doctor or therapist involved. If you are able to find it, please do come back and finish the form.');
+    }, 200);
+  }
+  document.getElementById('docWrap').style.display = 'block';
+  document.getElementById('docName').focus();
+}
+function answerDoctor(){
+  data.doctor_name = document.getElementById('docName').value.trim();
+  next();
+}
+function pickUser(el, val){
+  var box = el.closest('.opts');
+  box.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel'); });
+  el.classList.add('sel');
+  data.knows_username = val;
+  if(val === 'No'){
+    return setTimeout(function(){
+      disqualify('Roblox username unknown',
+        'The attorneys need the Roblox username to look up the account. If you are able to find it — on the device, or in an email from Roblox — please do come back and finish the form.');
+    }, 200);
+  }
+  document.getElementById('userWrap').style.display = 'block';
+  document.getElementById('rbxUser').focus();
+}
+function answerUser(){
+  data.roblox_username = document.getElementById('rbxUser').value.trim();
+  next();
+}
+function answerEvidence(){
+  var e = data.evidence || [];
+  if(e.indexOf('None of these') > -1){
+    return disqualify('No supporting evidence',
+      'These claims need something to support them — messages, screenshots, a report, or medical records. Without any of that the attorneys are not able to proceed.');
+  }
+  next();
+}
+
+/* SOL. Never blocks by default; it records a status a human can act on. */
+function computeSol(){
+  var inc = parseInt(data.incident_year, 10);
+  var born = parseInt(data.birth_year, 10);
+  if(!inc || !born){ data.sol_status = 'REVIEW'; data.sol_note = 'Dates incomplete'; return; }
+
+  var ageNow = THIS_YEAR - born;
+  data.age_now = ageNow;
+  data.age_at_incident = inc - born;
+
+  if(hasInPersonAssault()){
+    data.sol_status = 'OK'; data.sol_note = 'In-person sexual abuse — no SOL check applied'; return;
+  }
+  if(ageNow < 18){
+    data.sol_status = 'OK'; data.sol_note = 'Still a minor — no SOL check applied'; return;
+  }
+  var years = SOL_YEARS[data.state];
+  if(!years){ data.sol_status = 'REVIEW'; data.sol_note = 'No SOL value on file for ' + data.state; return; }
+
+  /* Minor at the time: the clock runs from their 18th birthday. */
+  var startYear = (inc - born) < 18 ? (born + 18) : inc;
+  var deadline = startYear + years;
+  data.sol_note = 'PI SOL ' + years + 'y from ' + startYear + ' → ' + deadline;
+  data.sol_status = (THIS_YEAR <= deadline) ? 'OK' : 'LIKELY EXPIRED';
+}
+function answerDates(){
+  data.incident_year = document.getElementById('incYear').value;
+  data.birth_year = document.getElementById('birthYear').value;
+  computeSol();
+  if(HARD_STOP_ON_SOL && data.sol_status === 'LIKELY EXPIRED'){
+    return disqualify('SOL likely expired (' + data.sol_note + ')',
+      'The time limit for bringing this kind of claim in ' + data.state_name + ' appears to have passed. Time limits do have exceptions, so if you would like a second opinion it is worth speaking to an attorney directly.');
+  }
+  next();
+}
+
+/* ---------- submit ---------- */
+function submitLead(e){
+  e.preventDefault();
+  var f = document.getElementById('leadForm');
+  var fd = new FormData(f);
+
+  fd.append('relationship',      data.relationship || '');
+  fd.append('state',             data.state_name || '');
+  fd.append('was_minor',         data.was_minor || '');
+  fd.append('met_on_roblox',     data.met_on_roblox || '');
+  fd.append('what_happened',     (data.what_happened || []).join('; '));
+  fd.append('roblox_comms',      data.roblox_comms || '');
+  fd.append('diagnosis',         (data.diagnosis || []).join('; '));
+  fd.append('doctor_name',       data.doctor_name || '');
+  fd.append('account_owner',     data.account_owner || '');
+  fd.append('roblox_username',   data.roblox_username || '');
+  fd.append('account_access',    data.account_access || '');
+  fd.append('evidence',          (data.evidence || []).join('; '));
+  fd.append('has_attorney',      data.has_attorney || '');
+  fd.append('is_living',         data.is_living || '');
+  fd.append('passing_cause',     data.passing_cause || '');
+  fd.append('incident_year',     data.incident_year || '');
+  fd.append('birth_year',        data.birth_year || '');
+  fd.append('age_at_incident',   data.age_at_incident || '');
+  fd.append('sol_status',        data.sol_status || '');
+  fd.append('sol_note',          data.sol_note || '');
+  fd.append('review_flags',      (data.review_flags || []).join('; '));
+  fd.append('consent_text',      document.getElementById('consentText').textContent);
+  fd.append('consent_timestamp', new Date().toISOString());
+  fd.append('page_url',          window.location.href);
+  fd.append('_subject',          'New Roblox Claim Advocate Lead');
+
+  var btn = document.getElementById('submitBtn');
+  btn.textContent = 'Sending…'; btn.disabled = true;
+
+  function done(){
+    document.getElementById('fnameOut').textContent = fd.get('first_name') || 'friend';
+    stepHistory.push(cur); cur = 'done'; render();
+  }
+  if(!ENDPOINT){ setTimeout(done, 600); return false; }
+  fetch(ENDPOINT, {method:'POST', body:fd}).then(done).catch(done);
+  return false;
+}
+
+/* ---------- build the selects ---------- */
+(function(){
+  var s = document.getElementById('stateSel');
+  STATES.forEach(function(st){
+    var o = document.createElement('option');
+    o.value = st[0]; o.textContent = st[1];
+    s.appendChild(o);
+  });
+  s.addEventListener('change', function(){
+    document.getElementById('stateNext').disabled = !s.value;
+  });
+
+  var iy = document.getElementById('incYear');
+  var by = document.getElementById('birthYear');
+  for(var y = THIS_YEAR; y >= THIS_YEAR - 25; y--){
+    var o = document.createElement('option'); o.value = y; o.textContent = y; iy.appendChild(o);
+  }
+  for(var b = THIS_YEAR; b >= THIS_YEAR - 40; b--){
+    var o2 = document.createElement('option'); o2.value = b; o2.textContent = b; by.appendChild(o2);
+  }
+  function chk(){
+    document.getElementById('datesNext').disabled = !(iy.value && by.value);
+  }
+  iy.addEventListener('change', chk);
+  by.addEventListener('change', chk);
+
+  /* free-text steps: the Continue button stays disabled until something is typed */
+  [['rbxUser','userNext'],['docName','docNext']].forEach(function(pair){
+    var inp = document.getElementById(pair[0]);
+    var btn = document.getElementById(pair[1]);
+    inp.addEventListener('input', function(){ btn.disabled = !inp.value.trim(); });
+  });
+})();
+
+/* ---------- consent text (names the buying firm once it is set) ---------- */
+(function(){
+  var firm = FIRM_NAME ? (FIRM_NAME + ', ') : '';
+  document.getElementById('consentText').innerHTML =
+    'By checking this box I am providing my electronic signature and my express written consent for Roblox Claim Advocate (a service of Legal Advocate Group), ' + firm +
+    'and the law firms and their agents to whom my information is referred, to contact me at the phone number and email address I have provided — including by automated telephone dialing system, prerecorded or artificial voice message, text message (SMS/MMS), and email — about a potential legal claim and related services, even if my number is listed on a state or national Do Not Call registry. ' +
+    'I understand consent is not a condition of receiving any goods or services and that I may revoke it at any time. Message and data rates may apply; reply STOP to opt out or HELP for help. ' +
+    'I confirm I am at least 18 years old and that I am the person affected or have legal authority to act for them. I agree to the ' +
+    '<a href="terms.html" target="_blank">Terms &amp; Conditions</a> and the <a href="privacy.html" target="_blank">Privacy Policy</a>.';
+
+  var support =
+    '<b>If you need support right now</b>' +
+    '988 Suicide &amp; Crisis Lifeline — call or text <a href="tel:988">988</a>, any time, free and confidential.<br>' +
+    'NCMEC CyberTipline — report online exploitation of a child at <a href="https://report.cybertip.org" target="_blank" rel="noopener">report.cybertip.org</a> or call <a href="tel:18008435678">1-800-843-5678</a>.<br>' +
+    'If a child is in immediate danger, call 911.';
+  document.getElementById('supportDone').innerHTML = support;
+  document.getElementById('supportNq').innerHTML = support;
+})();
+
+render();
+</script>
+</body>
+</html>
