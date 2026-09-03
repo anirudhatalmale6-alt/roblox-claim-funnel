@@ -980,13 +980,29 @@ function submitLead(e){
   var btn = document.getElementById('submitBtn');
   btn.textContent = 'Sending…'; btn.disabled = true;
 
+  /* Called exactly once, however we get here. Guarded because the fetch and
+     the timeout below race each other and both finish sooner or later. */
+  var finished = false;
   function done(){
+    if(finished) return;
+    finished = true;
     rcaTrackLead();   // fires only here — a screen-out is not a lead
     document.getElementById('fnameOut').textContent = fd.get('first_name') || 'friend';
     stepHistory.push(cur); cur = 'done'; render();
   }
+
   if(!ENDPOINT){ setTimeout(done, 600); return false; }
-  fetch(ENDPOINT, {method:'POST', body:fd}).then(done).catch(done);
+
+  /* A fetch that never settles used to leave the button on "Sending…"
+     forever, and because the conversion event fires in done(), a hung
+     request also cost us the lead event. Never let the network decide
+     whether the visitor gets an answer: the submission has already left
+     the browser, so after 8 seconds we show the thank-you screen anyway.
+     Losing the response is survivable; losing the visitor is not. */
+  var giveUp = setTimeout(done, 8000);
+  fetch(ENDPOINT, {method:'POST', body:fd})
+    .then(function(){ clearTimeout(giveUp); done(); })
+    .catch(function(){ clearTimeout(giveUp); done(); });
   return false;
 }
 
