@@ -71,7 +71,10 @@ var FIELDS = [
   'evidence','has_attorney','is_living','passing_cause',
   'incident_year','birth_year','age_at_incident',
   'sol_status','sol_note','review_flags',
-  'notes','consent_timestamp','consent_text','page_url'
+  'notes','consent_timestamp','consent_text','page_url',
+  /* ad attribution — which ad, which campaign, which click */
+  'utm_source','utm_medium','utm_campaign','utm_content','utm_term',
+  'fbclid','gclid','ttclid','msclkid','referrer','landing_url'
 ];
 
 /* Two bookkeeping columns after the answers. */
@@ -115,11 +118,22 @@ function storeLead_(p) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sh = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
 
+  var head = ['Received'].concat(FIELDS).concat(['Sent to firm', 'Firm response']);
+
   if (sh.getLastRow() === 0) {
-    var head = ['Received'].concat(FIELDS).concat(['Sent to firm', 'Firm response']);
     sh.appendRow(head);
     sh.getRange(1, 1, 1, head.length).setFontWeight('bold');
     sh.setFrozenRows(1);
+  } else {
+    // A sheet built by an earlier version has fewer answer columns. Insert the
+    // missing ones in front of the two bookkeeping columns so the rows already
+    // in the sheet keep their meaning — never just relabel the header.
+    var old = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+    var missing = head.length - old.length;
+    if (missing > 0 && old[old.length - 2] === 'Sent to firm') {
+      sh.insertColumnsBefore(old.length - 1, missing);
+      sh.getRange(1, 1, 1, head.length).setValues([head]).setFontWeight('bold');
+    }
   }
 
   var row = [new Date()];

@@ -557,6 +557,38 @@ var data = {};
 var stepHistory = [];
 var THIS_YEAR = new Date().getFullYear();
 
+/* ---------- where the visitor came from ----------
+   The ad puts utm_* on the landing URL and Meta adds fbclid itself. A visitor
+   who opens the privacy page and comes back arrives with a bare URL, so the
+   tags are stashed on first landing and survive the rest of the session. */
+var SRC_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term',
+                'fbclid','gclid','ttclid','msclkid'];
+var source = (function(){
+  var out = {};
+  try { out = JSON.parse(sessionStorage.getItem('rca_src') || '{}') || {}; } catch(err){ out = {}; }
+
+  var qs = window.location.search.replace(/^\?/, '').split('&');
+  var q = {};
+  for(var i = 0; i < qs.length; i++){
+    if(!qs[i]) continue;
+    var eq = qs[i].indexOf('=');
+    var k  = eq > -1 ? qs[i].slice(0, eq) : qs[i];
+    var v  = eq > -1 ? qs[i].slice(eq + 1) : '';
+    try { q[decodeURIComponent(k)] = decodeURIComponent(v.replace(/\+/g, ' ')); }
+    catch(err2){ q[k] = v; }
+  }
+
+  SRC_KEYS.forEach(function(k){
+    if(q[k]) out[k] = String(q[k]).slice(0, 200);
+  });
+  if(!out.landing_url){
+    out.landing_url = window.location.href.slice(0, 500);
+    out.referrer    = (document.referrer || '').slice(0, 300);
+  }
+  try { sessionStorage.setItem('rca_src', JSON.stringify(out)); } catch(err3){}
+  return out;
+})();
+
 /* Ordered flow. showIf decides whether a step is asked at all. */
 var FLOW = [
   {id:'relationship'},
@@ -864,6 +896,12 @@ function submitLead(e){
   fd.append('consent_text',      document.getElementById('consentText').textContent);
   fd.append('consent_timestamp', new Date().toISOString());
   fd.append('page_url',          window.location.href);
+
+  /* ad attribution — blank when someone arrives without tags, never missing */
+  SRC_KEYS.forEach(function(k){ fd.append(k, source[k] || ''); });
+  fd.append('referrer',          source.referrer || '');
+  fd.append('landing_url',       source.landing_url || '');
+
   fd.append('_subject',          'New Roblox Claim Advocate Lead');
 
   var btn = document.getElementById('submitBtn');
