@@ -74,7 +74,10 @@ var FIELDS = [
   'notes','consent_timestamp','consent_text','page_url',
   /* ad attribution — which ad, which campaign, which click */
   'utm_source','utm_medium','utm_campaign','utm_content','utm_term',
-  'fbclid','gclid','ttclid','msclkid','referrer','landing_url'
+  'fbclid','gclid','ttclid','msclkid','referrer','landing_url',
+  /* Whop Ads adds its own set on top of the standard utm_* ones */
+  'utm_meta_ad_id','utm_meta_adset_id','utm_meta_campaign_id',
+  'utm_placement','utm_adset','utm_whop','wacid','wasid','waid'
 ];
 
 /* Two bookkeeping columns after the answers. */

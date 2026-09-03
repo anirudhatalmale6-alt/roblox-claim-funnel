@@ -563,7 +563,11 @@ var THIS_YEAR = new Date().getFullYear();
    who opens the privacy page and comes back arrives with a bare URL, so the
    tags are stashed on first landing and survive the rest of the session. */
 var SRC_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term',
-                'fbclid','gclid','ttclid','msclkid'];
+                'fbclid','gclid','ttclid','msclkid',
+                /* Whop appends these itself — note there is no utm_campaign in
+                   its set, so the campaign is identified by wacid instead */
+                'utm_meta_ad_id','utm_meta_adset_id','utm_meta_campaign_id',
+                'utm_placement','utm_adset','utm_whop','wacid','wasid','waid'];
 var source = (function(){
   var out = {};
   try { out = JSON.parse(sessionStorage.getItem('rca_src') || '{}') || {}; } catch(err){ out = {}; }
