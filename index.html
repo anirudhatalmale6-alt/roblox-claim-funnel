@@ -141,6 +141,7 @@ footer{background:#101d31;color:#9aabbd;margin-top:44px;padding:32px 20px}
   .row2{grid-template-columns:1fr}
 }
 </style>
+<script src="pixel.js"></script>
 </head>
 <body>
 
@@ -669,9 +670,17 @@ function disqualify(reason, msg){
 }
 
 /* ---------- single-select ---------- */
+var startedFired = false;
+function markStarted(){
+  if(startedFired) return;
+  startedFired = true;
+  rcaTrackStart();
+}
+
 function pick(el, val){
   var box = el.closest('.opts');
   var field = box.getAttribute('data-field');
+  markStarted();
   data[field] = val;
   box.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel'); });
   el.classList.add('sel');
@@ -908,6 +917,7 @@ function submitLead(e){
   btn.textContent = 'Sending…'; btn.disabled = true;
 
   function done(){
+    rcaTrackLead();   // fires only here — a screen-out is not a lead
     document.getElementById('fnameOut').textContent = fd.get('first_name') || 'friend';
     stepHistory.push(cur); cur = 'done'; render();
   }
