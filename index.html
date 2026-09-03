@@ -424,12 +424,21 @@ footer{background:#101d31;color:#9aabbd;margin-top:44px;padding:32px 20px}
         <span>Your details are kept confidential and are only shared with the attorneys reviewing this type of claim.</span>
       </div>
       <form id="leadForm" onsubmit="return submitLead(event)">
+        <!-- These four inputs carry no name= and no type=email/tel on purpose.
+             Whop's pixel scans the page for contact fields and quietly ships
+             what it finds to their servers, which forward to Meta. It decides
+             what to grab from the input's type, name, id and autocomplete
+             attributes, and skips anything it cannot match. Values are read by
+             id in submitLead() and posted from there, so the form works exactly
+             as before while the pixel sees nothing worth taking.
+             inputmode still gives phone keyboards the right keys, and pattern
+             replaces the validation that type=email was doing. -->
         <div class="row2">
-          <div class="field"><label for="fn">Your first name</label><input type="text" id="fn" name="first_name" required></div>
-          <div class="field"><label for="ln">Your last name</label><input type="text" id="ln" name="last_name" required></div>
+          <div class="field"><label for="fn">Your first name</label><input type="text" id="fn" required></div>
+          <div class="field"><label for="ln">Your last name</label><input type="text" id="ln" required></div>
         </div>
-        <div class="field"><label for="ph">Phone number</label><input type="tel" id="ph" name="phone" required placeholder="(555) 555-5555"></div>
-        <div class="field"><label for="em">Email address</label><input type="email" id="em" name="email" required placeholder="you@example.com"></div>
+        <div class="field"><label for="ph">Phone number</label><input type="text" inputmode="tel" id="ph" required placeholder="(555) 555-5555"></div>
+        <div class="field"><label for="em">Email address</label><input type="text" inputmode="email" id="em" required placeholder="you@example.com" pattern="[^@\s]+@[^@\s]+\.[^@\s]{2,}" title="Please enter a valid email address"></div>
         <div class="field">
           <label for="bt">Best time to reach you</label>
           <select id="bt" name="best_time">
@@ -884,6 +893,12 @@ function submitLead(e){
   e.preventDefault();
   var f = document.getElementById('leadForm');
   var fd = new FormData(f);
+
+  /* read by id — see the note on the inputs themselves */
+  fd.append('first_name', document.getElementById('fn').value.trim());
+  fd.append('last_name',  document.getElementById('ln').value.trim());
+  fd.append('phone',      document.getElementById('ph').value.trim());
+  fd.append('email',      document.getElementById('em').value.trim());
 
   fd.append('relationship',      data.relationship || '');
   fd.append('state',             data.state_name || '');
