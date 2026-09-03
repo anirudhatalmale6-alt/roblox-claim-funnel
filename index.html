@@ -533,7 +533,7 @@ var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxSKxPExS_SOL0QLrVqtIFRX
 
 /* Name of the buying law firm, used in the TCPA consent text.
    Set this the moment the firm is confirmed. */
-var FIRM_NAME = '';   // e.g. 'Smith & Partners LLP'
+var FIRM_NAME = 'Legal Advocate Group';   // e.g. 'Smith & Partners LLP'
 
 /* States the campaign does NOT accept. */
 var EXCLUDED_STATES = ['LA','CO','CA','FL'];
@@ -981,9 +981,16 @@ function submitLead(e){
 
 /* ---------- consent text (names the buying firm once it is set) ---------- */
 (function(){
-  var firm = FIRM_NAME ? (FIRM_NAME + ', ') : '';
+  /* Named parties, de-duplicated. Legal Advocate Group operates the site, so
+     if it is also the firm receiving the lead it must not be listed twice —
+     a consent that stutters looks careless to a regulator reading it back.
+     When a separate buying firm is named later it simply appends here. */
+  var OPERATOR = 'Legal Advocate Group';
+  var parties  = ['Roblox Claim Advocate (a service of ' + OPERATOR + ')'];
+  if(FIRM_NAME && FIRM_NAME !== OPERATOR){ parties.push(FIRM_NAME); }
+
   document.getElementById('consentText').innerHTML =
-    'By checking this box I am providing my electronic signature and my express written consent for Roblox Claim Advocate (a service of Legal Advocate Group), ' + firm +
+    'By checking this box I am providing my electronic signature and my express written consent for ' + parties.join(', ') + ', ' +
     'and the law firms and their agents to whom my information is referred, to contact me at the phone number and email address I have provided — including by automated telephone dialing system, prerecorded or artificial voice message, text message (SMS/MMS), and email — about a potential legal claim and related services, even if my number is listed on a state or national Do Not Call registry. ' +
     'I understand consent is not a condition of receiving any goods or services and that I may revoke it at any time. Message and data rates may apply; reply STOP to opt out or HELP for help. ' +
     'I confirm I am at least 18 years old and that I am the person affected or have legal authority to act for them. I agree to the ' +
