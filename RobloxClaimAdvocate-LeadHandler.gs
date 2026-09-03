@@ -20,6 +20,10 @@
  *        Execute as:      Me
  *        Who has access:  Anyone
  *   5. Copy the /exec URL and paste it into  var ENDPOINT = ''  in index.html.
+ *   6. LEAD_SECRET below must match LEAD_SECRET in index.html exactly. If they
+ *      ever disagree, every real lead is rejected and the sheet stays empty
+ *      while the site still shows visitors a thank-you screen — so change the
+ *      two together, and post a test lead afterwards.
  *
  * Google will ask you to authorise Gmail and external requests. Without the
  * Gmail permission the sheet still fills but no email goes out.
@@ -33,6 +37,12 @@
 
 var NOTIFY_EMAIL = 'CHANGE_ME@example.com';   // where the alert email goes
 var SHEET_NAME   = 'Leads';
+
+/* Shared secret. Must match LEAD_SECRET in index.html character for
+   character. Anything posted without it is dropped, so knowing the /exec
+   URL on its own is not enough to write junk rows.
+   Set it to '' to switch the check off and accept everything again. */
+var LEAD_SECRET  = 'euBlnrgQadmJ5OgRsdXf1DKcMDWg';
 
 /* ========================= 2. FIRM FORWARDING =========================
    Leave FIRM_ENDPOINT empty until the firm gives you a URL. Everything
@@ -77,7 +87,12 @@ var FIELDS = [
   'fbclid','gclid','ttclid','msclkid','referrer','landing_url',
   /* Whop Ads adds its own set on top of the standard utm_* ones */
   'utm_meta_ad_id','utm_meta_adset_id','utm_meta_campaign_id',
-  'utm_placement','utm_adset','utm_whop','wacid','wasid','waid'
+  'utm_placement','utm_adset','utm_whop','wacid','wasid','waid',
+  /* TrustedForm consent certificate. New fields go on the END of this list —
+     the header repair below inserts missing columns just before the two
+     bookkeeping columns, so anything added in the middle would shift the
+     data already in the sheet. */
+  'xxTrustedFormCertUrl'
 ];
 
 /* Two bookkeeping columns after the answers. */
@@ -89,6 +104,14 @@ var COL_RESULT = FIELDS.length + 3;   // 'Firm response'
 function doPost(e) {
   var p = (e && e.parameter) ? e.parameter : {};
   var rowNum = null;
+
+  // Anything that does not know the shared secret is dropped before it can
+  // touch the sheet. Nothing is written and nothing is emailed, so a flood of
+  // junk posts costs an execution and no more. The reply deliberately says
+  // nothing useful about why it was refused.
+  if (LEAD_SECRET && p.lead_secret !== LEAD_SECRET) {
+    return json_({ok: false, error: 'rejected'});
+  }
 
   // Bank it first. If this throws there is nothing sensible left to do.
   try {

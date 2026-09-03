@@ -142,6 +142,28 @@ footer{background:#101d31;color:#9aabbd;margin-top:44px;padding:32px 20px}
 }
 </style>
 <script src="pixel.js"></script>
+
+<!-- TrustedForm (ActiveProspect). Records a certificate of what the visitor
+     saw and agreed to at the moment they consented, and writes its URL into
+     the hidden xxTrustedFormCertUrl field on the lead form. The buyer claims
+     that certificate with their own API key, so nothing account-specific
+     belongs on this page. No <noscript> pixel: the questionnaire needs
+     JavaScript to run at all, so a visitor without it never reaches consent. -->
+<script type="text/javascript">
+(function(){
+  var field = 'xxTrustedFormCertUrl';
+  var provideReferrer = false;
+  var tf = document.createElement('script');
+  tf.type = 'text/javascript';
+  tf.async = true;
+  tf.src = 'https://api.trustedform.com/trustedform.js'
+         + '?provide_referrer=' + encodeURIComponent(provideReferrer)
+         + '&field=' + encodeURIComponent(field)
+         + '&l=' + new Date().getTime() + Math.random();
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(tf, s);
+})();
+</script>
 </head>
 <body>
 
@@ -424,6 +446,10 @@ footer{background:#101d31;color:#9aabbd;margin-top:44px;padding:32px 20px}
         <span>Your details are kept confidential and are only shared with the attorneys reviewing this type of claim.</span>
       </div>
       <form id="leadForm" onsubmit="return submitLead(event)">
+        <!-- TrustedForm writes the certificate URL into this field. type=hidden
+             is also what keeps Whop's pixel away from it — its matcher skips
+             hidden inputs, same reason the contact fields below are plain text. -->
+        <input type="hidden" id="xxTrustedFormCertUrl" name="xxTrustedFormCertUrl">
         <!-- These four inputs carry no name= and no type=email/tel on purpose.
              Whop's pixel scans the page for contact fields and quietly ships
              what it finds to their servers, which forward to Meta. It decides
@@ -530,6 +556,14 @@ footer{background:#101d31;color:#9aabbd;margin-top:44px;padding:32px 20px}
    works, but nothing is transmitted.
    ============================================================ */
 var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxSKxPExS_SOL0QLrVqtIFRXsPCIPy-Fz8JFYN62JMawWF82lmt4gCwT4wxu6iktScT/exec';
+
+/* Shared secret sent with every submission. The Apps Script drops anything
+   that arrives without it, so knowing the /exec URL alone is not enough to
+   write junk into the sheet. This is visible to anyone who reads this page,
+   which is unavoidable in a browser — it stops drive-by posting, not a
+   determined person. It must match LEAD_SECRET in the Apps Script exactly;
+   change one without the other and every lead is silently rejected. */
+var LEAD_SECRET = 'euBlnrgQadmJ5OgRsdXf1DKcMDWg';
 
 /* Name of the buying law firm, used in the TCPA consent text.
    Set this the moment the firm is confirmed. */
@@ -931,6 +965,17 @@ function submitLead(e){
   fd.append('landing_url',       source.landing_url || '');
 
   fd.append('_subject',          'New Roblox Claim Advocate Lead');
+
+  /* Consent proof. TrustedForm fills the hidden field itself; read it at
+     submit time rather than earlier, because the certificate is only final
+     once the visitor has actually been through the page. Empty means the
+     script failed to load — the lead still goes through, and the blank
+     column in the sheet is how you find out. */
+  fd.set('xxTrustedFormCertUrl',
+         (document.getElementById('xxTrustedFormCertUrl') || {}).value || '');
+
+  /* Shared secret — the Apps Script drops anything without it. */
+  fd.append('lead_secret', LEAD_SECRET);
 
   var btn = document.getElementById('submitBtn');
   btn.textContent = 'Sending…'; btn.disabled = true;
